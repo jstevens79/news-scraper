@@ -1,5 +1,5 @@
 const express = require("express");
-const mongoose = require("mongoose");
+const mongoose = require("mongoose")
 
 const PORT = process.env.PORT || 3000;
 
@@ -17,5 +17,6 @@ app.set("view engine", "handlebars");
 const routes = require('./controllers/index');
 app.use(routes);
 
+mongoose.connect("mongodb://localhost:27017/newsScraper", { useNewUrlParser: true});
 
 app.listen(PORT, () => console.log(`App running on port ${PORT}.`))

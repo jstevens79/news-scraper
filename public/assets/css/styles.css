@@ -1,0 +1,170 @@
+/* general */
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+
+body {
+  background: black;
+  color: white;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+p {
+  font-size: 1em;
+  line-height: 1.4em;
+}
+
+h1 {
+  font-weight: bold;
+  font-size: 1.5em;
+  line-height: 1.2em;
+}
+
+h2 {
+  font-weight: bold;
+  font-size: 1.3em;
+  line-height: 1.2em;
+}
+
+h3 {
+  font-weight: bold;
+  font-size: 1em;
+  line-height: 1.2em;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+nav {
+  position: fixed;
+  z-index: 5000;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 80px;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  border-bottom: solid 1px white;
+}
+
+.logo {
+  padding: 0 20px;
+  flex: 0;
+  text-transform: uppercase;
+}
+
+.navLinks {
+  flex: 1;
+  display: flex;
+}
+
+.navLinks a {
+  padding: 0 20px;
+}
+
+#scrape {
+  margin: 0 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+
+.feature {
+  text-align: center;
+}
+
+.featureContent {
+  width: 100vw;
+  height: 60vh;
+  position: relative;
+}
+
+.featureContent h1 {
+  position: absolute;
+  font-size: 5vw;
+  left: 50%;
+  top: 16vh;
+  transform: translateX(-50%);
+}
+
+.featureImage {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100vw;
+  height: 40vh;
+  background-image: url('../img/macbook-pro_2.jpg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+
+}
+
+
+/* modal */
+.modal {
+  top: 0;
+  left: -100vw;
+  position: absolute;
+  z-index: 10000;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0;
+  background: rgba(0,0,0,0.8);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  overflow-x: auto;
+  color: black;
+  transition: opacity .5s linear .2s;
+}
+
+.modal.shown {
+  left: 0vw;
+  opacity: 1;
+}
+
+
+.modalWindow {
+  position: absolute;
+  top: 200vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60vw;
+  min-height: 70vh;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 20px black;
+  transition: top .5s ease-in .3s;
+}
+
+.modalWindow.shown {
+  top: 10vh;
+}
+
+.modalContent {
+  padding: 40px;
+}
+
+.modalLink {
+  color: black;
+}
+
+
+.byline {
+  font-size: .7em;
+  color: rgb(70, 70, 70);
+}
+
+.modalArticles li {
+  padding-bottom: 20px;
+}

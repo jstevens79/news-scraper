@@ -2,21 +2,18 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<title>News Scraper</title>
 		<link rel="stylesheet" href="/assets/css/reset.css">
-		<!--<link rel="stylesheet" href="/assets/css/styles.css">-->
-		<script src="https://code.jquery.com/jquery.js"></script>
-		
+		<link rel="stylesheet" href="/assets/css/styles.css">
 	</head>
 	<body>
-		<div class="wrapper">
-			<header>
-				<h1>News Scraper</h1>
-			</header>
-			<div>
-				{{{ body }}}
-			</div>
+		{{> header }}
+		<div class="container">
+			{{{ body }}}
 		</div>
-		<!--<script src="/assets/js/burgers.js"></script>-->
+		{{> modal}}
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+		<script src="/assets/js/scraper.js"></script>
 	</body>
 </html>

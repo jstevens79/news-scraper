@@ -5,14 +5,16 @@ const db = require('../models');
 const cheerio = require('cheerio');
 
 router.get('/', (req, res) => {
-  res.render('index')
+  db.Article.find({})
+    .then(dbArticle => res.render('index', dbArticle))
+    .catch(err => res.json(err))
+  //res.render('index')
 })
 
 router.get('/scrape', (req,res) => {
   axios.get('https://www.macrumors.com/').then(response => {
     // res.send(response.data);
     const $ = cheerio.load(response.data);
-
     const results = []
 
     $(".article").each(function(i, elem) {

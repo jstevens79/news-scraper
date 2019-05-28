@@ -27,14 +27,22 @@ router.get('/scrape', (req,res) => {
     })
 
     res.json(results)
-    
-    // $('.story').each(function(i, element) {
-    //   respObj.push(element)
-    // })
-
-    // res.send(respObj)
 
   })
+})
+
+router.post('/articles', (req, res) => {
+  db.Article.create(req.body)
+    .then(dbArticle => {
+      res.json(dbArticle)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+})
+
+router.delete('/articles/:id', (req, res) => {
+  db.Article.deleteOne({ '_id': req.params.id}, (err, complete) => res.send('complete'))
 })
 
 module.exports = router;

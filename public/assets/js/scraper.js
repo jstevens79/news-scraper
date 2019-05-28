@@ -1,7 +1,6 @@
+var scrapedArticles;
 
 $(document).ready(function() {
-
-
   $('.scrape').on('click', function(e) {
     e.preventDefault();
 
@@ -10,8 +9,13 @@ $(document).ready(function() {
     $.ajax({
       url: "/scrape"
     }).done(function(res) {
-     $('.modalArticles').empty();
+      $('.modalArticles').empty();
+
+      scrapedArticles = res;
+
+      console.log(scrapedArticles)
       // hide modal spinner...
+
 
       // populate modal
       $.each(res, function(i, elem) {
@@ -21,23 +25,107 @@ $(document).ready(function() {
         title.append(link);
         var byline = $('<span>').text(elem.byline).addClass('byline');
         var listItem = $('<li>');
-        listItem.append(title, byline);
-        $('.modalArticles').append(listItem)
+        var button = $('<button>').attr('id', i);
+        button.addClass('addArticle').text('Add');
+        //button.attr('onclick', 'addArticle(' + i + ')');
+        button.attr('data-start', i);
+        var articleContainer = $('<div>').addClass('articleContainer');
+        var buttonContainer = $('<div>').addClass('buttonContainer');
+        articleContainer.append(title, byline);
+        buttonContainer.append(button);
+        listItem.append(articleContainer, buttonContainer);
+        $('.modalArticles').append(listItem);
       })
 
       $('.modalWindow').toggleClass('shown')
       
-
-      
+      setupClicks()
 
     })
 
   })
 
   $('.modal').on('click', function(e) {
-    e.stopPropagation();
     $(this).toggleClass('shown')
     $('.modalWindow').toggleClass('shown')
   })
 
+  $('.modalWindow').on('click', function(e) {
+    e.stopPropagation()
+  })
+
+
+  function setupClicks() {
+    $('.addArticle').on('click', function() {
+      var that = $(this)
+      var id = $(this).data('start');
+      var data = scrapedArticles[id];
+      $.ajax({
+        type: "POST",
+        url: '/articles',
+        data: data
+      }).done(function(res, id) {
+        that.removeClass('addArticle')
+        .addClass('removeArticle')
+        .attr('id', res._id)
+        .text('Remove')
+        setupClicks();
+      })
+     
+    })
+
+    $('.removeArticle').on('click', function() {
+      var that = $(this)
+      $.ajax({
+        type: "DELETE",
+        url: '/articles/' + $(this).attr('id'),
+      }).done(function(res) {
+        that.removeClass('removeArticle')
+        .addClass('addArticle')
+        .attr('id', that.data('start'))
+        .text('Add')
+        setupClicks();
+      })
+    })
+  }
+
+
+  setupClicks();
+
+  
+
 })
+
+
+
+
+
+
+// function addArticle(a) {
+//   $.ajax({
+//     type: "POST",
+//     url: '/articles',
+//     data: scrapedArticles[a]
+//   }).done(function(res) {
+//     $('#' + a).removeClass('addArticle')
+//     .addClass('removeArticle')
+//     .attr('id', res._id)
+//     .attr('onclick', 'removeArticle("' + res._id +'")')
+//     .text('Remove')
+//   })
+
+// }
+
+// function removeArticle(id) {
+//   $.ajax({
+//     type: "DELETE",
+//     url: '/articles/' + id,
+//   }).done(function(res) {
+//     console.log(res)
+//     $('#' + id).removeClass('removeArticle')
+//     .addClass('addArticle')
+//     .attr('id', res._id)
+//     .attr('onclick', 'addArticle("' + res._id +'")')
+//     .text('add')
+//   })
+// }

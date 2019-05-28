@@ -11,10 +11,14 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  byline: {
+    type: String,
+    required: true
+  },
   note: {
     type: Schema.Types.ObjectId,
     ref: "Comment"
-  }
+  },
 });
 
 var Article = mongoose.model("Article", ArticleSchema);

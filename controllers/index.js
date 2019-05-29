@@ -6,9 +6,19 @@ const cheerio = require('cheerio');
 
 router.get('/', (req, res) => {
   db.Article.find({})
-    .then(dbArticle => res.render('index', dbArticle))
+    .limit(3)
+    .then(dbArticle => {
+      res.render('index', {articles: dbArticle})
+    })
     .catch(err => res.json(err))
-  //res.render('index')
+})
+
+router.get('/articles', (req, res) => {
+  db.Article.find({})
+    .then(dbArticle => {
+      res.render('index', {articles: dbArticle})
+    })
+    .catch(err => res.json(err))
 })
 
 router.get('/scrape', (req,res) => {
@@ -32,6 +42,7 @@ router.get('/scrape', (req,res) => {
 })
 
 router.post('/articles', (req, res) => {
+  console.log('posting')
   db.Article.create(req.body)
     .then(dbArticle => {
       res.json(dbArticle)

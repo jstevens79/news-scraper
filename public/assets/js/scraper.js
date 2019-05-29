@@ -13,10 +13,6 @@ $(document).ready(function() {
 
       scrapedArticles = res;
 
-      console.log(scrapedArticles)
-      // hide modal spinner...
-
-
       // populate modal
       $.each(res, function(i, elem) {
         var title = $('<h3>');
@@ -47,7 +43,8 @@ $(document).ready(function() {
 
   $('.modal').on('click', function(e) {
     $(this).toggleClass('shown')
-    $('.modalWindow').toggleClass('shown')
+    $('.modalWindow').toggleClass('shown');
+    location.reload()
   })
 
   $('.modalWindow').on('click', function(e) {
@@ -55,7 +52,12 @@ $(document).ready(function() {
   })
 
 
+ 
+
   function setupClicks() {
+    $('.addArticle').off();
+    $('.removeArticle').off();
+
     $('.addArticle').on('click', function() {
       var that = $(this)
       var id = $(this).data('start');
@@ -85,6 +87,10 @@ $(document).ready(function() {
         .attr('id', that.data('start'))
         .text('Add')
         setupClicks();
+
+        if (that.hasClass('main')) {
+          location.reload()
+        }
       })
     })
   }

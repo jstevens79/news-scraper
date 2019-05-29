@@ -10,10 +10,21 @@
     <button id="featureScraper">Get articles</button>
   </div>
   <section class="featuredArticles">
-    <h2>Saved articles</h2>
+    <h2>Recently saved articles</h2>
     <ul>
+
       {{#each articles}}
-        <li></li>
+        <li class="articleCard">
+          <h2>{{title}}</h2>
+          <span>{{byline}}</span>
+          <p>snippet here?...</p>
+          <div class="controlbar">
+            <span>Notes</span>
+            <button class="removeArticle main" id="{{_id}}">Remove Article</span>
+          </div>
+        </li>
+      {{else}}
+        No articles have been saved yet.
       {{/each}}
     </ul>
   </section>

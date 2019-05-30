@@ -17,7 +17,7 @@ app.set("view engine", "handlebars");
 const routes = require('./controllers/index');
 app.use(routes);
 
-const DB = process.env.MongoDB_URI || "mongodb://admin1:password1@ds225840.mlab.com:25840/heroku_v0qls6hj"
+const DB = process.env.MONGODB_URI || "mongodb://admin1:password1@ds225840.mlab.com:25840/heroku_v0qls6hj"
 
 mongoose.connect(DB, { useMongoClient: true, useNewUrlParser: true});
 

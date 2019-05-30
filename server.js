@@ -22,5 +22,3 @@ const DB = process.env.MONGODB_URI || "mongodb://admin1:password1@ds225840.mlab.
 mongoose.connect(DB, { useNewUrlParser: true});
 
 app.listen(PORT, () => console.log(`App running on port ${PORT}.`))
-
-MongoDB_URI

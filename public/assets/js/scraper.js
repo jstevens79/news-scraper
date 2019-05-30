@@ -54,6 +54,7 @@ $(document).ready(function() {
   $('.closeModal').on('click', function(e) {
     $(this).parent().parent().toggleClass('shown');
     $(this).parent().toggleClass('shown');
+    location.reload();
   })
 
 

@@ -51,6 +51,11 @@ $(document).ready(function() {
     e.stopPropagation()
   })
 
+  $('.closeModal').on('click', function(e) {
+    $(this).parent().parent().toggleClass('shown');
+    $(this).parent().toggleClass('shown');
+  })
+
 
   function setupClicks() {
     $('.addArticle').off();

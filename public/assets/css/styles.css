@@ -42,6 +42,7 @@ h3 {
 a {
   color: white;
   text-decoration: none;
+  cursor: pointer;
 }
 
 nav {
@@ -54,11 +55,14 @@ nav {
   background: rgba(31, 31, 31, 0.95);
   display: flex;
   align-items: center;
+  justify-content: flex-start;
 }
 
+
 .logo {
+  font-size: 1.2em;
+  font-weight: bold;
   padding: 0 20px;
-  flex: 0;
   text-transform: uppercase;
 }
 
@@ -71,10 +75,26 @@ nav {
   padding: 0 20px;
 }
 
+nav a:hover {
+  color: #f1bc4b;
+}
+
 #scrape {
   margin: 0 20px;
   padding: 10px 20px;
   border-radius: 8px;
+  font-size: 1.2em;
+  background: #f79238;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+#scrape:active {
+  background: #d87f30;
+}
+
+#scrape:hover {
+  background: #f1bc4b;
 }
 
 .container {
@@ -95,19 +115,80 @@ nav {
   background-position: bottom center;
 }
 
+.recent {
+  text-align: center;
+  padding: 20px;
+}
+
+.viewMore {
+  font-size: .7em;
+  margin-left: 1em;
+  padding: .5em 1em;
+  background: #f79238;
+  color: white;
+  border-radius: 4px;
+}
 
 button:focus {
   outline: none;
 }
 
-.articleCard {
-  margin: 20px;
-  background: rgb(34, 34, 34);
-  padding: 10px;
-  border-radius: 8px;
+.cards {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
+.articleCard {
+  background: rgb(34, 34, 34);
+  padding: 10px;
+  margin: 10px;
+  border-radius: 8px;
+  width: calc(33% - 20px);
+  min-width: 350px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
+.articleCard h2 {
+  font-size: 1.2em;
+  padding: .75em 0;
+}
+
+.articleCard span {
+  font-size: .8em;
+  font-style: italic;
+  color: rgb(196, 196, 196);
+}
+
+.articleCard a:hover {
+  color: rgb(117, 205, 247);
+}
+
+.controlbar {
+  padding-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.controlbar button {
+  background: rgb(85, 177, 219);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: .5em 1em;
+  font-size: .7em;
+  margin-right: .5em;
+}
+
+.controlbar .removeArticle {
+  background: gray;
+}
+
+.noArticles {
+  margin: 40px;
+}
 /* modal */
 .modal {
   top: 0;
@@ -126,7 +207,6 @@ button:focus {
 }
 
 
-
 .modal.shown {
   left: 0vw;
   opacity: 1;
@@ -138,7 +218,8 @@ button:focus {
   top: 200vh;
   left: 50%;
   transform: translateX(-50%);
-  width: 60vw;
+  min-width: 60vw;
+  margin: 40px;
   min-height: 70vh;
   background: white;
   border-radius: 8px;
@@ -146,9 +227,22 @@ button:focus {
   transition: top .5s ease-in .3s;
 }
 
+.closeModal {
+  position: absolute;
+  color: rgb(197, 197, 197);
+  top: -30px;
+  right: -30px;
+  font-size: 30px;
+}
+
+.closeModal:hover {
+  cursor: pointer;
+  color: white;
+}
+
 .modal.note .modalWindow {
   max-width: 500px;
-  min-height: 400px;
+  min-height: 50vh;
 }
 
 
@@ -199,8 +293,37 @@ button:focus {
 }
 
 .modalContent.note {
+  position: absolute;
+  min-width: 100%;
+  min-height: 100%;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
 }
+
+.modalContent.note h1 {
+  padding-bottom: .75em;
+}
+
+.noteButtons {
+  padding-top: 50px;
+  justify-self: flex-end;
+}
+
+.noteButtons button {
+  background: #3f83A3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: .75em 1em;
+  font-size: .7em;
+  margin-right: .5em;
+}
+
+.noteButtons .deleteNote {
+  background: gray;
+}
+
 
 .modalContent form {
   display: flex;
@@ -210,6 +333,7 @@ button:focus {
 label {
   margin-bottom: .25em;
 }
+
 
 input, textarea {
   font-size: 1em;

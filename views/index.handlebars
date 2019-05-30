@@ -1,24 +1,18 @@
 
 <div class="wrapper">
   <section class="feature">
-    <div class="featureContent">
-      <span class="featureImage"></span>
-    </div>
+    <div class="featureContent"></div>
   </section>
-  <div class="getArticles">
-    <button id="featureScraper">Get articles</button>
-  </div>
   <section class="featuredArticles">
-    <h2>Recently saved articles</h2>
-    <ul>
-
+    <div class="recent">
+      <h2>Recently saved articles <a class="viewMore" href="/articles">View All</a></h2>
+    </div>
+    <ul class="cards">
       {{#each articles}}
         <li class="articleCard">
-          <h2>{{title}}</h2>
+          <a href="{{link}}" target="_blank"><h2>{{title}}</h2></a>
           <span>{{byline}}</span>
-          <p>snippet here?...</p>
           <div class="controlbar">
-            <button class="removeArticle main" id="{{_id}}">Remove Article</span>
             {{#if note}}
               <button class="viewNote" data-id={{_id}} data-note={{note}}>
                 View Note
@@ -26,10 +20,11 @@
             {{else}}
               <button class="addNote" data-id={{_id}}>Add Note</button>
             {{/if}}
+            <button class="removeArticle main" id="{{_id}}">Remove Article</span>
           </div>
         </li>
       {{else}}
-        No articles have been saved yet.
+        <span class="noArticles">No articles have been saved yet.</span>
       {{/each}}
     </ul>
   </section>

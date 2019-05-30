@@ -14,7 +14,13 @@
           <p>snippet here?...</p>
           <div class="controlbar">
             <button class="removeArticle main" id="{{_id}}">Remove Article</span>
-            <button class="addNote" data-id={{_id}}>Add Note</button>
+            {{#if note}}
+              <button class="viewNote" data-id={{_id}} data-note={{note}}>
+                View Note
+              </button>
+            {{else}}
+              <button class="addNote" data-id={{_id}}>Add Note</button>
+            {{/if}}
           </div>
         </li>
       {{else}}

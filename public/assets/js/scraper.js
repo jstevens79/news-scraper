@@ -51,33 +51,13 @@ $(document).ready(function() {
     e.stopPropagation()
   })
 
-  $('.addNote').on('click', function() {
-    $('#noteSubmit').attr('data-id', $(this).data('id'))
-    $('.modal.note').toggleClass('shown');
-    $('.modal.note').find('.modalWindow').toggleClass('shown')
-  })
-
-  $('#noteSubmit').on('click', function(e) {
-    e.preventDefault();
-    $.ajax({
-      method: "POST",
-      url: '/articles/' + $(this).data('id') + '/note',
-      data: {
-        body: $('#text').val().trim()
-      }
-    })
-    .then(function(data) {
-      location.reload();
-    })
-    .catch(function(err) {
-      console.log(err)
-    })
-  })
-
 
   function setupClicks() {
     $('.addArticle').off();
     $('.removeArticle').off();
+    $('.addNote').off();
+    $('#noteSubmit').off();
+    $('.viewNote').off();
 
     $('.addArticle').on('click', function() {
       var that = $(this)
@@ -114,6 +94,42 @@ $(document).ready(function() {
         }
       })
     })
+
+    $('.addNote').on('click', function() {
+      $('#noteSubmit').attr('data-id', $(this).data('id'))
+      $('.modal.note').toggleClass('shown');
+      $('.modal.note').find('.modalWindow').toggleClass('shown')
+    })
+  
+    $('#noteSubmit').on('click', function(e) {
+      e.preventDefault();
+      $.ajax({
+        method: "POST",
+        url: '/articles/' + $(this).data('id') + '/note',
+        data: {
+          body: $('#text').val().trim()
+        }
+      })
+      .done(function(data) {
+        setupClicks();
+        location.reload();
+      })
+      .catch(function(err) {
+        console.log(err)
+      })
+    })
+
+    $('.viewNote').on('click', function() {
+      console.log($(this).data('note'))
+      $.ajax({
+        method: "GET",
+        url: '/note/' + $(this).data('note')
+      }).done(function(data) {
+        // poplulate modal
+        console.log(data)
+      })
+    })
+
   }
 
 

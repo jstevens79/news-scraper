@@ -81,7 +81,6 @@ router.post("/articles/:id/note", (req, res) => {
 });
 
 router.put("/note/:id", (req, res) => {
-  console.log(req.body)
   db.Note.findOneAndUpdate(
     { _id: req.params.id},
     req.body,

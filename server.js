@@ -19,7 +19,7 @@ app.use(routes);
 
 const DB = process.env.MONGODB_URI || "mongodb://admin1:password1@ds225840.mlab.com:25840/heroku_v0qls6hj"
 
-mongoose.connect(DB, { useMongoClient: true, useNewUrlParser: true});
+mongoose.connect(DB, { useNewUrlParser: true});
 
 app.listen(PORT, () => console.log(`App running on port ${PORT}.`))
 

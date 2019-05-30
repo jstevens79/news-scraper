@@ -87,30 +87,14 @@ nav {
 
 .featureContent {
   width: 100vw;
-  height: 60vh;
-  position: relative;
-}
-
-.featureContent h1 {
-  position: absolute;
-  font-size: 5vw;
-  left: 50%;
-  top: 16vh;
-  transform: translateX(-50%);
-}
-
-.featureImage {
-  position: absolute;
-  bottom: 0;
-  display: block;
-  width: 100vw;
   height: 40vh;
+  position: relative;
   background-image: url('../img/macbook-pro_2.jpg');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: bottom center;
-
 }
+
 
 button:focus {
   outline: none;
@@ -128,7 +112,7 @@ button:focus {
 .modal {
   top: 0;
   left: -100vw;
-  position: absolute;
+  position: fixed;
   z-index: 10000;
   width: 100vw;
   height: 100vh;
@@ -212,4 +196,46 @@ button:focus {
   border-radius: 8px;
   border: none;
   cursor: pointer;
+}
+
+.modalContent.note {
+  padding: 40px;
+}
+
+.modalContent form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: .25em;
+}
+
+input, textarea {
+  font-size: 1em;
+  border-radius: 4px;
+  padding: 10px;
+  border: solid 1px gray;
+  margin-bottom: 1em;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+}
+
+textarea {
+  min-height: 180px;
+}
+
+#noteSubmit {
+  border-radius: 4px;
+  flex-basis: 0;
+  flex-grow: 0;
+  flex-shrink: 0;
+  justify-self: center;
+  font-size: 1em;
+  padding: .5em .75em;
+  background: #3f83A3;
+  color: white;
+  border: none;
 }

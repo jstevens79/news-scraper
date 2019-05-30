@@ -1,77 +1,112 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const axios = require('axios');
-const db = require('../models');
-const cheerio = require('cheerio');
+const axios = require("axios");
+const db = require("../models");
+const cheerio = require("cheerio");
 
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   db.Article.find({})
     .limit(3)
     .then(dbArticle => {
-      res.render('index', {articles: dbArticle})
+      res.render("index", { articles: dbArticle });
     })
-    .catch(err => res.json(err))
-})
+    .catch(err => res.json(err));
+});
 
-router.get('/articles', (req, res) => {
+router.get("/articles", (req, res) => {
   db.Article.find({})
     .then(dbArticle => {
-      res.render('articles', {articles: dbArticle})
+      res.render("articles", { articles: dbArticle });
     })
-    .catch(err => res.json(err))
-})
+    .catch(err => res.json(err));
+});
 
-router.get('/scrape', (req,res) => {
-  axios.get('https://www.macrumors.com/').then(response => {
+router.get("/scrape", (req, res) => {
+  axios.get("https://www.macrumors.com/").then(response => {
     // res.send(response.data);
     const $ = cheerio.load(response.data);
-    const results = []
+    const results = [];
 
     $(".article").each(function(i, elem) {
-      const result = {}
-      result.link = $(this).find('.title a').attr('href')
-      result.title = $(this).find('.title a').text()
-      result.byline = $(this).find('.byline').text()
-      result.content = $(this).find('.content').text().trim()
-      results.push(result)
-    })
+      const result = {};
+      result.link = $(this)
+        .find(".title a")
+        .attr("href");
+      result.title = $(this)
+        .find(".title a")
+        .text()
+        .trim();
+      result.byline = $(this)
+        .find(".byline")
+        .text()
+        .trim();
+      result.content = $(this)
+        .find(".content")
+        .text()
+        .trim();
+      results.push(result);
+    });
 
-    res.json(results)
+    res.json(results);
+  });
+});
 
-  })
-})
-
-router.get('/note/:id', (req, res) => {
-  db.Note.findOne({ _id: req.params.id})
+router.get("/note/:id", (req, res) => {
+  db.Note.findOne({ _id: req.params.id })
     .then(dbNote => res.json(dbNote))
     .catch(err => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
-router.post('/articles', (req, res) => {
+router.post("/articles", (req, res) => {
   db.Article.create(req.body)
     .then(dbArticle => res.json(dbArticle))
     .catch(err => {
-      console.log(err)
-    })
-})
+      console.log(err);
+    });
+});
 
-router.post('/articles/:id/note', (req, res) => {
+router.post("/articles/:id/note", (req, res) => {
   db.Note.create(req.body)
     .then(dbNote => {
-      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id}, { new: true})
+      return db.Article.findOneAndUpdate(
+        { _id: req.params.id },
+        { note: dbNote._id },
+        { new: true }
+      );
     })
     .then(dbArticle => res.json(dbArticle))
-    .catch(err => res.json(err))
+    .catch(err => res.json(err));
+});
+
+router.put("/note/:id", (req, res) => {
+  console.log(req.body)
+  db.Note.findOneAndUpdate(
+    { _id: req.params.id},
+    req.body,
+    {new: true}
+  )
+  .then(dbNote => res.json(dbNote))
 })
 
-router.delete('/note/:id', (req, res) => {
-  db.Note.deleteOne({ '_id': req.params.id}, (err, complete) => res.send('complete'))
-})
+router.delete("/note/:id", (req, res) => {
+  db.Article.findOneAndUpdate(
+    {
+      note: req.params.id
+    },
+    { $unset: { note: "" } }
+  ).then(() => {
+    db.Note.deleteOne({ _id: req.params.id }, (err, complete) =>
+      res.send("complete")
+    );
+  });
+});
 
-router.delete('/articles/:id', (req, res) => {
-  db.Article.deleteOne({ '_id': req.params.id}, (err, complete) => res.send('complete'))
-})
+router.delete("/articles/:id", (req, res) => {
+  db.Article.deleteOne({ _id: req.params.id }, (err, complete) =>
+    res.send("complete")
+  );
+});
 
 module.exports = router;

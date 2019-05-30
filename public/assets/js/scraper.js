@@ -4,7 +4,7 @@ $(document).ready(function() {
   $('.scrape').on('click', function(e) {
     e.preventDefault();
 
-    $('.modal').toggleClass('shown');
+    $('.modal.articles').toggleClass('shown');
 
     $.ajax({
       url: "/scrape"
@@ -33,7 +33,7 @@ $(document).ready(function() {
         $('.modalArticles').append(listItem);
       })
 
-      $('.modalWindow').toggleClass('shown')
+      $('.modal.articles').find('.modalWindow').toggleClass('shown')
       
       setupClicks()
 
@@ -43,7 +43,7 @@ $(document).ready(function() {
 
   $('.modal').on('click', function(e) {
     $(this).toggleClass('shown')
-    $('.modalWindow').toggleClass('shown');
+    $(this).find('.modalWindow').toggleClass('shown');
     location.reload()
   })
 
@@ -51,8 +51,29 @@ $(document).ready(function() {
     e.stopPropagation()
   })
 
+  $('.addNote').on('click', function() {
+    $('#noteSubmit').attr('data-id', $(this).data('id'))
+    $('.modal.note').toggleClass('shown');
+    $('.modal.note').find('.modalWindow').toggleClass('shown')
+  })
 
- 
+  $('#noteSubmit').on('click', function(e) {
+    e.preventDefault();
+    $.ajax({
+      method: "POST",
+      url: '/articles/' + $(this).data('id') + '/note',
+      data: {
+        body: $('#text').val().trim()
+      }
+    })
+    .then(function(data) {
+      location.reload();
+    })
+    .catch(function(err) {
+      console.log(err)
+    })
+  })
+
 
   function setupClicks() {
     $('.addArticle').off();
@@ -97,6 +118,8 @@ $(document).ready(function() {
 
 
   setupClicks();
+
+
 
   
 

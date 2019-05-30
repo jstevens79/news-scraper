@@ -16,7 +16,8 @@ router.get('/', (req, res) => {
 router.get('/articles', (req, res) => {
   db.Article.find({})
     .then(dbArticle => {
-      res.render('index', {articles: dbArticle})
+      console.log(dbArticle)
+      res.render('articles', {articles: dbArticle})
     })
     .catch(err => res.json(err))
 })
@@ -44,12 +45,24 @@ router.get('/scrape', (req,res) => {
 router.post('/articles', (req, res) => {
   console.log('posting')
   db.Article.create(req.body)
-    .then(dbArticle => {
-      res.json(dbArticle)
-    })
+    .then(dbArticle => res.json(dbArticle))
     .catch(err => {
       console.log(err)
     })
+})
+
+router.post('/articles/:id/note', (req, res) => {
+  db.Note.create(req.body)
+    .then(dbNote => {
+      console.log(dbNote)
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id}, { new: true})
+    })
+    .then(dbArticle => res.json(dbArticle))
+    .catch(err => res.json(err))
+})
+
+router.delete('/note/:id', (req, res) => {
+  db.Note.deleteOne({ '_id': req.params.id}, (err, complete) => res.send('complete'))
 })
 
 router.delete('/articles/:id', (req, res) => {
